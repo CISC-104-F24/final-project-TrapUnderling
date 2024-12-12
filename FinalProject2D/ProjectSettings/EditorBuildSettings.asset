@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: af2c75d02a9990745b5e716db7a573c5
+  - enabled: 1
     path: Assets/Scenes/MainRoom.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Jumpscare.unity
+    guid: 0e24f53b431f5b8479a2b45e3588f646
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 8fc8330d82b826d41ae4d35baeca9ee9
   m_configObjects: {}
