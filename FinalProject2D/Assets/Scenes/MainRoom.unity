@@ -428,6 +428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 413289349}
   - component: {fileID: 413289350}
+  - component: {fileID: 413289351}
   m_Layer: 0
   m_Name: Computer
   m_TagString: Untagged
@@ -490,7 +491,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 2747690628134850419, guid: b670ab75dde984907b8570040daa08c5, type: 3}
   m_Color: {r: 0.6679245, g: 0.6679245, b: 0.6679245, a: 1}
   m_FlipX: 0
@@ -502,6 +503,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &413289351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413289348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb2c1dc03a7ba5549bf0f0348ffead82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionRange: 100
+  anxietyDecreaseAmount: 30
+  interactionCooldown: 5
 --- !u!1 &452889114
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,7 +531,7 @@ GameObject:
   - component: {fileID: 452889116}
   - component: {fileID: 452889115}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Anxiety
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -939,7 +955,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -291, y: 199.6}
+  m_AnchoredPosition: {x: -289.10004, y: 192.57}
   m_SizeDelta: {x: -754.2, y: -445.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &783923030
@@ -1005,9 +1021,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031a063a97de1af4a8421cce1ffe7693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anxietySlider: {fileID: 783923030}
-  fillTime: 30
-  jumpscareScene: Jumpscare
+  anxietyBar: {fileID: 783923030}
+  maxAnxiety: 100
+  anxietyFillSpeed: 10
 --- !u!1 &891864109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,6 +1666,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1354887413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354887400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ffd502601408164ea27566472a569cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuScene: MainMenu
+  gameSceneName: GameScene
+  gameOverSceneName: GameOver
 --- !u!1 &1453599309
 GameObject:
   m_ObjectHideFlags: 0
@@ -2069,6 +2100,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 47991976020177848, guid: 9cfdeafdb5f421447890138100359b66, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1354887408}
+    - targetCorrespondingSourceObject: {fileID: 47991976020177848, guid: 9cfdeafdb5f421447890138100359b66, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1354887413}
   m_SourcePrefab: {fileID: 100100000, guid: 9cfdeafdb5f421447890138100359b66, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

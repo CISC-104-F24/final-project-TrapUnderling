@@ -1,50 +1,96 @@
 using UnityEngine;
-using UnityEngine.UI;  // Required for accessing UI components
+using UnityEngine.UI; // For using UI Slider
+using System.Collections; // Required for using IEnumerator and coroutines
 using UnityEngine.SceneManagement; // Required for scene management
 
-public class AnxietyMeter : MonoBehaviour
+public class Anxiety : MonoBehaviour
 {
-    // Reference to the Slider component
-    public Slider anxietySlider;
+    // Reference to the Slider (Anxiety Bar UI)
+    public Slider anxietyBar;
 
-    // Time it takes to fill the meter completely (in seconds)
-    public float fillTime = 30f;
+    // Set maximum and minimum values for the Anxiety Bar
+    public float maxAnxiety = 100f;
+    public float anxietyFillSpeed = 5f; // The speed at which the anxiety fills up over time
+    private float currentAnxiety = 0f;
 
-    // The current time elapsed
-    private float timeElapsed = 0f;
-
-    // The maximum value the anxiety meter can reach
-    private float maxAnxiety = 100f;
-
-    // The scene name to load when the meter is full
-    public string jumpscareScene = "Jumpscare";
-
+    // Start is called before the first frame update
     void Start()
     {
-        // Make sure the anxiety meter starts at 0
-        anxietySlider.value = 0;
+        // Ensure the anxiety bar starts at 0
+        if (anxietyBar != null)
+        {
+            anxietyBar.maxValue = maxAnxiety; // Set the maximum value for the anxiety bar
+            anxietyBar.value = 0f; // Start with the anxiety bar empty
+        }
+        else
+        {
+            Debug.LogError("Anxiety bar Slider is not assigned!");
+        }
+
+        // Start the Coroutine to fill the anxiety bar over time
+        StartCoroutine(FillAnxietyBar());
     }
 
-    void Update()
+    // Coroutine to fill the anxiety bar over time
+    private IEnumerator FillAnxietyBar()
     {
-        // If anxiety bar isn't max -> fill bar
-        if (anxietySlider.value < maxAnxiety)
+        while (currentAnxiety < maxAnxiety)
         {
-            // Increase the time elapsed
-            timeElapsed += Time.deltaTime;
+            currentAnxiety += anxietyFillSpeed * Time.deltaTime; // Increase anxiety over time
+            anxietyBar.value = currentAnxiety;
 
-            // Calculate the new value for the slider
-            float newValue = (timeElapsed / fillTime) * maxAnxiety;
+            // If the anxiety bar is full, load the Jumpscare scene
+            if (currentAnxiety >= maxAnxiety)
+            {
+                LoadJumpscareScene();
+                yield break; // Exit the coroutine after switching scenes
+            }
 
-            // Set the slider's value based on time elapsed
-            anxietySlider.value = Mathf.Clamp(newValue, 0, maxAnxiety);
+            // Wait until the next frame
+            yield return null;
         }
+    }
 
-        // Check if the anxiety meter is full
-        if (anxietySlider.value >= maxAnxiety)
+    // Method to decrease anxiety (called from other scripts like InteractWithObject)
+    public void DecreaseAnxiety(float amount)
+    {
+        if (anxietyBar != null)
         {
-            // Switch to the "Jumpscare" scene
-            SceneManager.LoadScene(2);
+            currentAnxiety -= amount;
+
+            // Ensure the anxiety value doesn't go below 0
+            if (currentAnxiety < 0)
+            {
+                currentAnxiety = 0;
+            }
+
+            // Update the Slider's value
+            anxietyBar.value = currentAnxiety;
         }
+        else
+        {
+            Debug.LogError("Anxiety bar Slider is not assigned!");
+        }
+    }
+
+    // Optional: If you want to reset the anxiety bar back to full (100) later
+    public void ResetAnxiety()
+    {
+        if (anxietyBar != null)
+        {
+            currentAnxiety = maxAnxiety; // Reset the anxiety to max
+            anxietyBar.value = currentAnxiety; // Update the UI
+        }
+        else
+        {
+            Debug.LogError("Anxiety bar Slider is not assigned!");
+        }
+    }
+
+    // Method to load the Jumpscare scene when anxiety is full
+    private void LoadJumpscareScene()
+    {
+        // Assuming the Jumpscare scene is named "Jumpscare" in your Build Settings
+        SceneManager.LoadScene("Jumpscare");
     }
 }
